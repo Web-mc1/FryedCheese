@@ -1,1 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fryed Cheese | Developer & Creator</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #ff5e5b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            color: var(--accent-color);
+        }
+
+        p.bio {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            text-align: left;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin: 20px 0 10px 0;
+        }
+
+        .link-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 20px;
+            border-radius: 8px;
+            background-color: #26334d;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease-in-out;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn:hover {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 94, 91, 0.3);
+        }
+
+        /* Specific Button Highlights */
+        .btn-kofi {
+            background-color: #29abe2;
+            border: none;
+        }
+        .btn-kofi:hover {
+            background-color: #1c82b1;
+        }
+
+        .btn-discord {
+            background-color: #5865f2;
+            border: none;
+        }
+        .btn-discord:hover {
+            background-color: #4752c4;
+        }
+
+        .discord-info {
+            background: #0f172a;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border: 1px dashed var(--border-color);
+        }
+
+        .discord-info span {
+            color: var(--text-color);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Fryed Cheese</h1>
+        <p class="bio">Full-game developer, web creator & content maker.</p>
+
+        <div class="section-title">Connect & Support</div>
+        <div class="link-list">
+            <a href="https://youtube.com/@fryed_cheese?si=KxHyi6K7XMY1lHop" target="_blank" class="btn">
+                📺 YouTube Channel
+            </a>
+            <a href="https://ko-fi.com/fryedcheese" target="_blank" class="btn btn-kofi">
+                ☕ Support Me on Ko-fi
+            </a>
+            <a href="https://discord.gg/5p6NBf2DQe" target="_blank" class="btn btn-discord">
+                💬 Join the Discord Server
+            </a>
+        </div>
+
+        <div class="discord-info">
+            Discord Username: <span>fryed_cheese</span>
+        </div>
+
+        <div class="section-title">My Websites & Games</div>
+        <div class="link-list">
+            <a href="https://web-mc1.github.io/CheeseWhiz/" target="_blank" class="btn">
+                🧀 CheeseWhiz
+            </a>
+            <a href="https://web-mc1.github.io/MineMath/" target="_blank" class="btn">
+                ⛏️ MineMath
+            </a>
+            <a href="https://itch.io" target="_blank" class="btn">
+                🎮 My Itch.io Profile
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
