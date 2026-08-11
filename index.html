@@ -5,53 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FryedCheese — Creator Studio & Hub</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
 
     :root {
-      --bg: #090a0f;
-      --card: rgba(255, 255, 255, 0.03);
-      --card-hover: rgba(255, 255, 255, 0.06);
-      --border: rgba(255, 255, 255, 0.08);
-      --border-accent: rgba(168, 85, 247, 0.3);
-      --accent: #a855f7;
-      --accent-cyan: #38bdf8;
-      --accent-green: #4ade80;
-      --text: #f3f4f6;
-      --muted: #9ca3af;
+      --bg-dark: #0b0f19;
+      --bg-mid: #1e1b4b;
+      --bg-bottom: #311042;
+      
+      --card-bg: rgba(255, 255, 255, 0.04);
+      --card-hover: rgba(255, 255, 255, 0.08);
+      --card-border: rgba(255, 255, 255, 0.12);
+      
+      --neon-pink: #ec4899;
+      --neon-purple: #a855f7;
+      --neon-cyan: #38bdf8;
+      
+      --text-main: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.65);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
     body {
-      background-color: var(--bg);
-      color: var(--text);
+      background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-mid) 50%, var(--bg-bottom) 100%);
+      background-attachment: fixed;
+      color: var(--text-main);
       font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
       line-height: 1.5;
+      min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* SUBFRAME-STYLE AMBIENT BACKDROP */
+    /* OVERHOOK-MATCHING GLOWS */
     .glow {
       position: fixed;
-      width: 500px;
-      height: 500px;
+      width: 550px;
+      height: 550px;
       border-radius: 50%;
-      filter: blur(120px);
+      filter: blur(140px);
       z-index: -1;
-      opacity: 0.12;
+      opacity: 0.25;
       pointer-events: none;
     }
-    .glow-top { top: -150px; left: 20%; background: var(--accent); }
-    .glow-bottom { bottom: -150px; right: 20%; background: var(--accent-cyan); }
+    .glow-top { top: -150px; left: 15%; background: var(--neon-purple); }
+    .glow-bottom { bottom: -150px; right: 15%; background: var(--neon-cyan); }
+    .glow-center { top: 40%; left: 50%; transform: translate(-50%, -50%); background: var(--neon-pink); opacity: 0.15; }
 
     /* FLOATING NAV BAR */
     nav {
       max-width: 900px;
       margin: 24px auto 0;
-      padding: 12px 24px;
-      background: rgba(15, 17, 26, 0.7);
+      padding: 12px 28px;
+      background: rgba(11, 15, 25, 0.65);
       backdrop-filter: blur(20px);
-      border: 1px solid var(--border);
+      border: 1px solid var(--card-border);
       border-radius: 99px;
       display: flex;
       justify-content: space-between;
@@ -59,32 +66,42 @@
       position: sticky;
       top: 20px;
       z-index: 100;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
 
     .brand {
-      font-weight: 800;
-      font-size: 16px;
+      font-weight: 900;
+      font-size: 18px;
       letter-spacing: -0.5px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      background: linear-gradient(135deg, #fff 0%, var(--neon-purple) 50%, var(--neon-pink) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .brand-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+    .brand-dot { 
+      width: 10px; 
+      height: 10px; 
+      background: var(--neon-pink); 
+      border-radius: 50%; 
+      box-shadow: 0 0 12px var(--neon-pink);
+    }
 
     .nav-links {
       display: flex;
-      gap: 20px;
+      gap: 24px;
       list-style: none;
     }
 
     .nav-links a {
-      color: var(--muted);
+      color: var(--text-muted);
       text-decoration: none;
       font-size: 13px;
       font-weight: 600;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover { color: var(--text-main); }
 
     /* LAYOUT CONTAINER */
     .container {
@@ -103,31 +120,40 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 14px;
+      padding: 6px 16px;
       border-radius: 99px;
-      background: rgba(74, 222, 128, 0.08);
-      border: 1px solid rgba(74, 222, 128, 0.2);
-      color: var(--accent-green);
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--neon-cyan);
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: 0.5px;
       margin-bottom: 20px;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
     }
-    .pulse-dot { width: 6px; height: 6px; background: var(--accent-green); border-radius: 50%; box-shadow: 0 0 8px var(--accent-green); }
+    .pulse-dot { 
+      width: 6px; 
+      height: 6px; 
+      background: var(--neon-cyan); 
+      border-radius: 50%; 
+      box-shadow: 0 0 8px var(--neon-cyan); 
+    }
 
     .hero h1 {
-      font-size: 52px;
-      font-weight: 800;
-      letter-spacing: -1.5px;
+      font-size: 56px;
+      font-weight: 900;
+      letter-spacing: -2px;
       margin-bottom: 16px;
-      background: linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);
+      background: linear-gradient(135deg, #ffffff 0%, var(--neon-cyan) 40%, var(--neon-purple) 80%, var(--neon-pink) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 10px 20px rgba(168, 85, 247, 0.25));
     }
 
     .hero p {
       font-size: 16px;
-      color: var(--muted);
-      max-width: 520px;
+      color: var(--text-muted);
+      max-width: 540px;
       margin: 0 auto;
     }
 
@@ -140,19 +166,21 @@
     }
 
     .bento-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 32px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 36px;
       backdrop-filter: blur(16px);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
       overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     }
     .bento-card:hover {
       background: var(--card-hover);
-      border-color: rgba(255, 255, 255, 0.15);
-      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-4px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(168, 85, 247, 0.2);
     }
 
     .col-8 { grid-column: span 8; }
@@ -164,116 +192,146 @@
     }
 
     .card-label {
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 12px;
+      font-weight: 800;
       letter-spacing: 1px;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--neon-pink);
       margin-bottom: 12px;
     }
 
     .card-title {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 8px;
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 10px;
     }
 
     .card-desc {
       font-size: 14px;
-      color: var(--muted);
+      color: var(--text-muted);
       margin-bottom: 24px;
     }
 
-    /* BUTTONS */
+    /* BUTTONS MATCHING OVERHOOK UI */
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 20px;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 800;
       text-decoration: none;
       cursor: pointer;
       border: none;
-      transition: all 0.2s;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .btn-primary { background: #fff; color: #000; }
-    .btn-primary:hover { opacity: 0.9; transform: scale(1.02); }
-    .btn-secondary { background: rgba(255,255,255,0.06); color: #fff; border: 1px solid var(--border); }
-    .btn-secondary:hover { background: rgba(255,255,255,0.12); }
+    .btn-primary { 
+      background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-purple) 100%); 
+      color: #fff; 
+      box-shadow: 0 8px 20px rgba(56, 189, 248, 0.3);
+    }
+    .btn-primary:hover { 
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(56, 189, 248, 0.5);
+      filter: brightness(1.1);
+    }
+    
+    .btn-secondary { 
+      background: rgba(255, 255, 255, 0.08); 
+      color: #fff; 
+      border: 1px solid var(--card-border); 
+    }
+    .btn-secondary:hover { 
+      background: rgba(255, 255, 255, 0.16); 
+      border-color: rgba(255, 255, 255, 0.3);
+    }
 
     /* MINECRAFT BENTO CARD */
     .mc-ip-box {
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 16px;
+      background: rgba(11, 15, 25, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 12px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-top: 16px;
     }
-    .mc-ip-text { font-family: monospace; color: var(--accent-cyan); font-weight: 600; }
+    .mc-ip-text { 
+      font-family: monospace; 
+      color: var(--neon-cyan); 
+      font-weight: 700;
+      font-size: 16px;
+    }
 
     /* COMMUNITY COMMENTS PANEL */
     .comments-container {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 32px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 36px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     }
 
     .comment-form {
       display: grid;
-      gap: 12px;
+      gap: 14px;
       margin-bottom: 32px;
     }
 
     .form-input, .form-textarea {
-      background: rgba(0,0,0,0.3);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 16px;
-      color: var(--text);
+      background: rgba(11, 15, 25, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      color: var(--text-main);
       font-family: inherit;
-      font-size: 13px;
+      font-size: 14px;
     }
-    .form-input:focus, .form-textarea:focus { outline: none; border-color: var(--accent); }
-    .form-textarea { resize: vertical; min-height: 80px; }
+    .form-input:focus, .form-textarea:focus { 
+      outline: none; 
+      border-color: var(--neon-purple); 
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+    }
+    .form-textarea { resize: vertical; min-height: 90px; }
 
     .comment-card {
-      background: rgba(0,0,0,0.2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
+      background: rgba(11, 15, 25, 0.4);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
       margin-bottom: 12px;
     }
-    .comment-meta { display: flex; justify-content: space-between; margin-bottom: 6px; }
-    .comment-user { font-size: 13px; font-weight: 700; color: var(--accent-cyan); }
-    .comment-date { font-size: 11px; color: var(--muted); }
-    .comment-text { font-size: 13px; color: #d1d5db; }
+    .comment-meta { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .comment-user { font-size: 14px; font-weight: 800; color: var(--neon-cyan); }
+    .comment-date { font-size: 12px; color: var(--text-muted); }
+    .comment-text { font-size: 14px; color: rgba(255, 255, 255, 0.85); }
 
-    /* MODAL */
+    /* OVERHOOK GAME MODAL */
     .modal {
       display: none;
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(12px);
+      background: rgba(11, 15, 25, 0.9);
+      backdrop-filter: blur(16px);
       z-index: 1000;
       justify-content: center;
       align-items: center;
     }
     .modal-inner {
-      width: 90%; height: 85%; max-width: 1100px;
-      background: #000; border-radius: 20px; border: 1px solid var(--border);
+      width: 92%; height: 88%; max-width: 1200px;
+      background: #0b0f19; border-radius: 24px; border: 1px solid var(--card-border);
       position: relative; overflow: hidden;
+      box-shadow: 0 0 50px rgba(168, 85, 247, 0.3);
     }
     .modal-close {
-      position: absolute; top: 16px; right: 20px; color: #fff;
-      font-size: 24px; cursor: pointer; z-index: 10;
+      position: absolute; top: 16px; right: 24px; color: #fff;
+      font-size: 28px; cursor: pointer; z-index: 10;
+      transition: transform 0.2s;
     }
+    .modal-close:hover { transform: scale(1.2); color: var(--neon-pink); }
     iframe { width: 100%; height: 100%; border: none; }
   </style>
 </head>
@@ -281,6 +339,7 @@
 
   <div class="glow glow-top"></div>
   <div class="glow glow-bottom"></div>
+  <div class="glow glow-center"></div>
 
   <nav>
     <div class="brand"><div class="brand-dot"></div> FRYEDCHEESE</div>
@@ -295,9 +354,9 @@
   <div class="container">
     
     <section class="hero">
-      <div class="status-badge"><div class="pulse-dot"></div> Available for Events & Dev</div>
+      <div class="status-badge"><div class="pulse-dot"></div> OVERHOOK EDITION READY</div>
       <h1>Game Developer & Creator</h1>
-      <p>Building arcade web games, running competitive Minecraft events, and sharing devlogs online.</p>
+      <p>Building neon arcade web games, running competitive Minecraft events, and sharing devlogs online.</p>
     </section>
 
     <!-- SUBFRAME BENTO GRID -->
@@ -313,7 +372,7 @@
 
       <!-- YOUTUBE BENTO -->
       <div class="bento-card col-4" id="yt">
-        <div class="card-label">Content</div>
+        <div class="card-label" style="color: var(--neon-cyan);">Content</div>
         <div class="card-title">YouTube</div>
         <p class="card-desc">Devlogs, event highlights, and challenge videos.</p>
         <a href="https://youtube.com" target="_blank" class="btn btn-secondary">Subscribe</a>
@@ -321,7 +380,7 @@
 
       <!-- MINECRAFT SERVER BENTO -->
       <div class="bento-card col-12" id="mc">
-        <div class="card-label">Minecraft Community</div>
+        <div class="card-label" style="color: var(--neon-purple);">Minecraft Community</div>
         <div class="card-title">Custom Events Server</div>
         <p class="card-desc">Host to custom-coded gamemodes, speedruns, and community tournaments.</p>
         <div class="mc-ip-box">
@@ -356,7 +415,7 @@
 
   </div>
 
-  <!-- GAME MODAL -->
+  <!-- OVERHOOK GAME MODAL -->
   <div class="modal" id="gameModal">
     <div class="modal-inner">
       <span class="modal-close" onclick="closeGame()">&times;</span>
@@ -390,14 +449,22 @@
       card.className = 'comment-card';
       card.innerHTML = `
         <div class="comment-meta">
-          <span class="comment-user">${name}</span>
+          <span class="comment-user">${escapeHtml(name)}</span>
           <span class="comment-date">Just now</span>
         </div>
-        <div class="comment-text">${text}</div>
+        <div class="comment-text">${escapeHtml(text)}</div>
       `;
       document.getElementById('commentsList').prepend(card);
       document.getElementById('commentForm').reset();
     });
+
+    function escapeHtml(text) {
+      return text.replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&#039;");
+    }
   </script>
 </body>
 </html>
