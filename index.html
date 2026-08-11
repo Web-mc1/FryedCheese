@@ -3,774 +3,566 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Overhook - Modern Neon Edition</title>
+  <title>FryedCheese Hub | Games, Minecraft & Content</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    :root {
+      --bg-dark: #090d16;
+      --card-bg: rgba(255, 255, 255, 0.04);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent-pink: #ec4899;
+      --accent-purple: #a855f7;
+      --accent-cyan: #38bdf8;
+      --accent-green: #22c55e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: #0b0f19;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      user-select: none;
-      color: #fff;
-    }
-    #game-container {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-    }
-    canvas {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
     
-    /* MODERN GLASSMORPHIC TITLE SCREEN */
-    #title-screen {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at 50% 30%, rgba(124, 58, 237, 0.25) 0%, rgba(15, 23, 42, 0.95) 100%);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 40px;
-      z-index: 10;
-      backdrop-filter: blur(20px);
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    .title-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 32px;
-      padding: 60px 80px;
-      text-align: center;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    /* BACKGROUND GLOWS */
+    .bg-glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(140px);
+      z-index: -1;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+    .glow-1 { top: -100px; left: -100px; background: var(--accent-purple); }
+    .glow-2 { bottom: -100px; right: -100px; background: var(--accent-cyan); }
+
+    /* NAVIGATION */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8%;
+      background: rgba(9, 13, 22, 0.8);
       backdrop-filter: blur(16px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      max-width: 560px;
-      width: 100%;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--card-border);
     }
 
-    .title-text {
-      font-size: 72px;
+    .brand-logo {
+      font-size: 24px;
       font-weight: 900;
-      letter-spacing: -2px;
-      background: linear-gradient(135deg, #ffffff 0%, #a855f7 50%, #ec4899 100%);
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #fff 0%, var(--accent-purple) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      line-height: 1;
-      filter: drop-shadow(0 10px 20px rgba(168, 85, 247, 0.3));
     }
 
-    .author-badge {
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
       font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.6);
-      background: rgba(255, 255, 255, 0.06);
-      padding: 6px 16px;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .author-badge span {
-      color: #38bdf8;
+      transition: color 0.2s ease;
     }
 
-    .best-score-box {
-      font-size: 15px;
-      font-weight: 600;
-      color: #f43f5e;
-      background: rgba(244, 63, 94, 0.1);
-      border: 1px solid rgba(244, 63, 94, 0.25);
-      padding: 10px 20px;
-      border-radius: 12px;
-      letter-spacing: 0.5px;
+    .nav-links a:hover {
+      color: var(--text-main);
     }
 
-    .start-btn {
-      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-      color: #ffffff;
-      font-size: 20px;
+    /* CONTAINER & SECTIONS */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    .section-title {
+      font-size: 32px;
       font-weight: 800;
-      padding: 18px 48px;
-      border-radius: 16px;
-      border: none;
-      box-shadow: 0 10px 25px rgba(56, 189, 248, 0.35);
-      cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      margin-top: 10px;
-      width: 100%;
-    }
-    .start-btn:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 15px 35px rgba(56, 189, 248, 0.5);
-      filter: brightness(1.1);
-    }
-    .start-btn:active {
-      transform: translateY(1px) scale(0.98);
-    }
-
-    /* MODERN MINIMAL HUD */
-    #hud {
-      position: absolute;
-      top: 24px;
-      left: 24px;
-      right: 24px;
-      display: none;
-      justify-content: space-between;
-      pointer-events: none;
-      z-index: 5;
-    }
-    .pill {
-      background: rgba(15, 23, 42, 0.65);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(12px);
-      padding: 10px 20px;
-      border-radius: 16px;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      margin-bottom: 32px;
       display: flex;
       align-items: center;
+      gap: 12px;
+    }
+
+    .section-title span {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 36px;
+    }
+
+    /* GRID & CARDS */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 32px;
+      backdrop-filter: blur(12px);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .card-tag {
+      align-self: flex-start;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    .tag-game { background: rgba(236, 72, 153, 0.15); color: var(--accent-pink); border: 1px solid rgba(236, 72, 153, 0.3); }
+    .tag-yt { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .tag-mc { background: rgba(34, 197, 94, 0.15); color: var(--accent-green); border: 1px solid rgba(34, 197, 94, 0.3); }
+
+    .card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
       gap: 8px;
     }
-    .pill span {
-      color: #38bdf8;
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(56, 189, 248, 0.2);
+    }
+    .btn-primary:hover {
+      filter: brightness(1.1);
+      transform: scale(1.02);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border: 1px solid var(--card-border);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* MINECRAFT BANNER */
+    .mc-banner {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(15, 23, 42, 0.6));
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      border-radius: 24px;
+      padding: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    .mc-info h3 {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .server-ip-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-family: monospace;
+      font-size: 16px;
+      color: var(--accent-green);
+    }
+
+    /* COMMENTS SECTION */
+    .comments-section {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 40px;
+    }
+
+    .comment-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .form-input, .form-textarea {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .comments-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .comment-card {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .comment-author {
+      font-weight: 700;
+      color: var(--accent-cyan);
+    }
+
+    .comment-date {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .comment-body {
+      font-size: 14px;
+      color: #e2e8f0;
+    }
+
+    /* GAME MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      width: 90%;
+      height: 85%;
+      max-width: 1200px;
+      background: #000;
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      color: #fff;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 1010;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
   </style>
 </head>
 <body>
 
-<div id="game-container">
-  <audio id="bgMusic" src="HiLau - 1984 (freetouse.com).mp3" loop></audio>
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
 
-  <div id="title-screen">
-    <div class="title-card">
-      <div class="title-text">OVERHOOK</div>
-      <div class="author-badge">BY <span>FRYEDCHEESE</span></div>
-      <div class="best-score-box" id="bestScoreBox">BEST TIME: --:--.--</div>
-      <button class="start-btn" id="startBtn">START GAME</button>
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="brand-logo">FRYEDCHEESE</div>
+    <ul class="nav-links">
+      <li><a href="#projects">My Work</a></li>
+      <li><a href="#youtube">YouTube</a></li>
+      <li><a href="#minecraft">Minecraft Events</a></li>
+      <li><a href="#comments">Community</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    
+    <!-- HERO -->
+    <section class="hero">
+      <h1>Creator & Game Developer</h1>
+      <p>Building arcade web experiences, hosting competitive Minecraft events, and sharing the process on YouTube.</p>
+    </section>
+
+    <!-- WORK / GAMES SECTION -->
+    <section id="projects">
+      <h2 class="section-title"><span>Featured</span> Work</h2>
+      <div class="grid">
+        
+        <!-- OVERHOOK CARD -->
+        <div class="card">
+          <div>
+            <div class="card-tag tag-game">Web Game</div>
+            <h3>Overhook</h3>
+            <p>A fast-paced neon grapple arcade game. Swing through levels, bounce on clouds, and set record times.</p>
+          </div>
+          <button class="btn btn-primary" onclick="openGame()">Play Game Online</button>
+        </div>
+
+        <!-- PLACEHOLDER FOR FUTURE WORK 1 -->
+        <div class="card">
+          <div>
+            <div class="card-tag tag-game">In Development</div>
+            <h3>Project #2</h3>
+            <p>Upcoming web project details will be posted here soon. Stay tuned for updates!</p>
+          </div>
+          <button class="btn btn-secondary" disabled style="opacity:0.5; cursor:not-allowed;">Coming Soon</button>
+        </div>
+
+        <!-- PLACEHOLDER FOR FUTURE WORK 2 -->
+        <div class="card">
+          <div>
+            <div class="card-tag tag-game">In Development</div>
+            <h3>Project #3</h3>
+            <p>Another exciting experience coming down the line. Check my YouTube channel for sneak peeks!</p>
+          </div>
+          <button class="btn btn-secondary" disabled style="opacity:0.5; cursor:not-allowed;">Coming Soon</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- YOUTUBE SECTION -->
+    <section id="youtube">
+      <h2 class="section-title"><span>YouTube</span> Channel</h2>
+      <div class="grid">
+        <div class="card" style="grid-column: span 2;">
+          <div>
+            <div class="card-tag tag-yt">Content Creation</div>
+            <h3>FryedCheese YouTube</h3>
+            <p>Watch devlogs, Minecraft event highlights, and challenge videos. Subscribe to stay up to date with new releases and community matches.</p>
+          </div>
+          <div style="display: flex; gap: 12px;">
+            <a href="https://youtube.com" target="_blank" class="btn btn-primary" style="background: #ef4444;">Subscribe on YouTube</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MINECRAFT SERVER SECTION -->
+    <section id="minecraft">
+      <h2 class="section-title"><span>Minecraft</span> Events Server</h2>
+      <div class="mc-banner">
+        <div class="mc-info">
+          <div class="card-tag tag-mc">Server Active</div>
+          <h3>Custom Minecraft Community Events</h3>
+          <p style="color: var(--text-muted); max-width: 500px;">Join custom-coded event gamemodes, tournaments, and community challenges directly on the server.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-end;">
+          <div class="server-ip-box">
+            <span id="serverIp">mc.fryedcheese.com</span>
+          </div>
+          <button class="btn btn-secondary" onclick="copyIp()">Copy IP Address</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMENTS SECTION -->
+    <section id="comments" class="comments-section">
+      <h2 class="section-title" style="margin-bottom: 24px;"><span>Community</span> Board</h2>
+      
+      <form class="comment-form" id="commentForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" class="form-input" placeholder="Your display name" required>
+        </div>
+        <div class="form-group">
+          <label for="comment">Message</label>
+          <textarea id="comment" class="form-textarea" placeholder="Leave a comment or game feedback..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="align-self: flex-start;">Post Comment</button>
+      </form>
+
+      <div class="comments-list" id="commentsList">
+        <div class="comment-card">
+          <div class="comment-header">
+            <span class="comment-author">FryedCheese</span>
+            <span class="comment-date">Admin</span>
+          </div>
+          <div class="comment-body">
+            Welcome to the new site! Feel free to leave suggestions for game updates or Minecraft event ideas here.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- OVERHOOK MODAL CONTAINER -->
+  <div class="modal" id="gameModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeGame()">&times;</span>
+      <iframe src="about:blank" id="gameIframe"></iframe>
     </div>
   </div>
 
-  <div id="hud">
-    <div class="pill">LVL <span id="lvlVal">1</span>/30</div>
-    <div class="pill">TIME <span id="timerVal" style="color: #38bdf8;">00:00.00</span></div>
-    <div class="pill" id="statusVal" style="color: #a855f7;">CLICK TO REEL IN!</div>
-    <div class="pill">BOUNCES <span id="bounceVal">0</span></div>
-  </div>
+  <script>
+    // COPY MINECRAFT IP FUNCTION
+    function copyIp() {
+      const ip = document.getElementById('serverIp').textContent;
+      navigator.clipboard.writeText(ip);
+      alert('Server IP copied to clipboard: ' + ip);
+    }
 
-  <canvas id="gameCanvas"></canvas>
-</div>
-
-<script>
-const TWO_PI = Math.PI * 2;
-const HALF_PI = Math.PI / 2;
-
-// AUDIO SYNTHESIS SETUP
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-const bgMusic = document.getElementById('bgMusic');
-
-function playBounceSound() {
-  if (audioCtx.state !== 'running') return;
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
-  const now = audioCtx.currentTime;
-  osc.type = 'sine';
-  osc.frequency.setValueAtTime(200 + Math.min(bounceCount * 10, 300), now);
-  osc.frequency.exponentialRampToValueAtTime(500, now + 0.12);
-  gain.gain.setValueAtTime(0.2, now);
-  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-  osc.connect(gain);
-  gain.connect(audioCtx.destination);
-  osc.start(now);
-  osc.stop(now + 0.12);
-}
-
-function playHookSound() {
-  if (audioCtx.state !== 'running') return;
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
-  const now = audioCtx.currentTime;
-  osc.type = 'sine';
-  osc.frequency.setValueAtTime(800, now);
-  osc.frequency.exponentialRampToValueAtTime(300, now + 0.08);
-  gain.gain.setValueAtTime(0.2, now);
-  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
-  osc.connect(gain);
-  gain.connect(audioCtx.destination);
-  osc.start(now);
-  osc.stop(now + 0.08);
-}
-
-function playReelSound() {
-  if (audioCtx.state !== 'running') return;
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
-  const now = audioCtx.currentTime;
-  osc.type = 'triangle';
-  osc.frequency.setValueAtTime(500, now);
-  osc.frequency.exponentialRampToValueAtTime(1000, now + 0.05);
-  gain.gain.setValueAtTime(0.15, now);
-  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
-  osc.connect(gain);
-  gain.connect(audioCtx.destination);
-  osc.start(now);
-  osc.stop(now + 0.05);
-}
-
-function playWinSound() {
-  if (audioCtx.state !== 'running') return;
-  const notes = [440, 554.37, 659.25, 880];
-  const now = audioCtx.currentTime;
-  notes.forEach((freq, i) => {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    const time = now + i * 0.07;
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(freq, time);
-    gain.gain.setValueAtTime(0.2, time);
-    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.15);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start(time);
-    osc.stop(time + 0.15);
-  });
-}
-
-// CANVAS & DOM ELEMENTS
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-
-const titleScreen = document.getElementById('title-screen');
-const startBtn = document.getElementById('startBtn');
-const bestScoreBox = document.getElementById('bestScoreBox');
-const hud = document.getElementById('hud');
-const statusVal = document.getElementById('statusVal');
-const lvlVal = document.getElementById('lvlVal');
-const bounceVal = document.getElementById('bounceVal');
-const timerVal = document.getElementById('timerVal');
-
-let gameStarted = false;
-let currentLevel = 1;
-let cameraX = 0;
-let bounceCount = 0;
-let cloudSpeedBoost = 1.0;
-let particles = [];
-let playerTrail = [];
-
-// STOPWATCH
-let startTime = 0;
-let elapsedTime = 0;
-let timerRunning = false;
-let finalTimeFormatted = "";
-
-function formatTime(ms) {
-  const totalSeconds = (ms / 1000) | 0;
-  const minutes = (totalSeconds / 60) | 0;
-  const seconds = totalSeconds % 60;
-  const centiseconds = ((ms % 1000) / 10) | 0;
-
-  const mStr = minutes < 10 ? '0' + minutes : minutes;
-  const sStr = seconds < 10 ? '0' + seconds : seconds;
-  const cStr = centiseconds < 10 ? '0' + centiseconds : centiseconds;
-
-  return `${mStr}:${sStr}.${cStr}`;
-}
-
-const savedBest = localStorage.getItem('overhook_best_time');
-if (savedBest) {
-  bestScoreBox.textContent = `BEST TIME: ${formatTime(parseInt(savedBest))}`;
-}
-
-function updateStopwatch() {
-  if (timerRunning) {
-    elapsedTime = Date.now() - startTime;
-    timerVal.textContent = formatTime(elapsedTime);
-  }
-}
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-function triggerReelIn() {
-  if (rope.attached && rope.targetStar) {
-    const dx = rope.targetStar.x - player.x;
-    const dy = rope.targetStar.y - player.y;
-    const currentDist = Math.sqrt(dx * dx + dy * dy);
-
-    if (currentDist > 20) {
-      const pullAmount = 65;
-      const newDist = Math.max(15, currentDist - pullAmount);
-      const angle = Math.atan2(dy, dx);
+    // GAME MODAL TOGGLE
+    function openGame() {
+      const modal = document.getElementById('gameModal');
+      const iframe = document.getElementById('gameIframe');
       
-      player.x = rope.targetStar.x - Math.cos(angle) * newDist;
-      player.y = rope.targetStar.y - Math.sin(angle) * newDist;
-      rope.length = newDist;
-
-      const speedBoost = 10.0 * Math.min(cloudSpeedBoost, 1.3);
-      player.vx += Math.cos(angle) * speedBoost;
-      player.vy += Math.sin(angle) * speedBoost;
+      // Points to external or relative game file
+      iframe.src = 'overhook.html'; 
+      modal.style.display = 'flex';
     }
 
-    playReelSound();
-  }
-}
-
-canvas.addEventListener('mousedown', e => {
-  if (e.button === 0 && gameStarted) {
-    if (!rope.attached) {
-      attachHook();
-    } else {
-      triggerReelIn();
+    function closeGame() {
+      const modal = document.getElementById('gameModal');
+      const iframe = document.getElementById('gameIframe');
+      iframe.src = 'about:blank';
+      modal.style.display = 'none';
     }
-  }
-});
 
-window.addEventListener('mouseup', e => {
-  if (e.button === 0) {
-    releaseHook();
-  }
-});
+    // COMMENT BOARD LOGIC
+    const commentForm = document.getElementById('commentForm');
+    const commentsList = document.getElementById('commentsList');
 
-window.addEventListener('contextmenu', e => e.preventDefault());
+    commentForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const commentText = document.getElementById('comment').value;
 
-startBtn.addEventListener('click', () => {
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
+      const newComment = document.createElement('div');
+      newComment.className = 'comment-card';
+      newComment.innerHTML = `
+        <div class="comment-header">
+          <span class="comment-author">${escapeHtml(username)}</span>
+          <span class="comment-date">Just now</span>
+        </div>
+        <div class="comment-body">
+          ${escapeHtml(commentText)}
+        </div>
+      `;
 
-  bgMusic.volume = 0.25;
-  bgMusic.play().catch(e => console.log("Music blocked:", e));
-
-  titleScreen.style.display = 'none';
-  hud.style.display = 'flex';
-  gameStarted = true;
-
-  startTime = Date.now();
-  elapsedTime = 0;
-  timerRunning = true;
-
-  initLevel(1);
-});
-
-// ENTITIES
-const player = {
-  x: 150,
-  y: 300,
-  vx: 0,
-  vy: 0,
-  radius: 18,
-  color: '#ec4899'
-};
-
-const rope = {
-  attached: false,
-  targetStar: null,
-  length: 0
-};
-
-let stars = [];
-let clouds = [];
-let birds = [];
-let finishLine = { x: 0, width: 90 };
-
-function createBounceParticles(x, y) {
-  for (let i = 0; i < 18; i++) {
-    const angle = Math.random() * TWO_PI;
-    const speed = 2 + Math.random() * 8;
-    particles.push({
-      x: x,
-      y: y,
-      vx: Math.cos(angle) * speed,
-      vy: Math.sin(angle) * speed - 2,
-      radius: 3 + Math.random() * 5,
-      life: 30,
-      maxLife: 30,
-      color: '#38bdf8'
-    });
-  }
-}
-
-function initLevel(lvl) {
-  currentLevel = Math.min(Math.max(1, lvl), 30);
-  lvlVal.textContent = currentLevel;
-  statusVal.textContent = `LEVEL ${currentLevel}`;
-  
-  const spawnX = 150;
-  const spawnY = canvas.height * 0.5;
-
-  player.x = spawnX;
-  player.y = spawnY - 30;
-  player.vx = 0;
-  player.vy = 0;
-  cameraX = 0;
-  rope.attached = false;
-  bounceCount = 0;
-  cloudSpeedBoost = 1.0;
-  bounceVal.textContent = bounceCount;
-
-  stars = [];
-  clouds = [];
-  birds = [];
-  particles = [];
-  playerTrail = [];
-
-  clouds.push({
-    x: spawnX,
-    y: spawnY,
-    w: 180,
-    h: 32,
-    bounceSquish: 0
-  });
-
-  const starCount = 10 + currentLevel * 2;
-  let lastX = 280;
-
-  for (let i = 0; i < starCount; i++) {
-    const spacing = 240 + Math.random() * 100 + (currentLevel * 5);
-    const starX = lastX + spacing;
-    const starY = (canvas.height * 0.28) + Math.sin(i * 0.7 + currentLevel) * (canvas.height * 0.18);
-    
-    const isMoving = currentLevel > 5 && (Math.random() < 0.35);
-    const moveSpeed = isMoving ? 0.0012 + (Math.random() * 0.001) : 0;
-    const moveRange = isMoving ? 25 + Math.random() * 35 : 0;
-
-    stars.push({
-      baseX: starX,
-      baseY: starY,
-      x: starX,
-      y: starY,
-      size: Math.max(20, 28 - ((currentLevel * 0.2) | 0)),
-      pulse: Math.random() * TWO_PI,
-      isMoving: isMoving,
-      moveSpeed: moveSpeed,
-      moveRange: moveRange,
-      offset: Math.random() * 100,
-      maxRopeLength: 320 + Math.random() * 280
+      commentsList.prepend(newComment);
+      commentForm.reset();
     });
 
-    if (Math.random() > 0.35) {
-      const w = 120 + Math.random() * 60;
-      const h = 28 + Math.random() * 10;
-      const cloudX = starX + (Math.random() * 40 - 20);
-      const cloudY = Math.min(canvas.height - 80, starY + 150 + Math.random() * 70);
-
-      clouds.push({
-        x: cloudX,
-        y: cloudY,
-        w: w,
-        h: h,
-        bounceSquish: 0
-      });
+    function escapeHtml(text) {
+      return text.replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&#039;");
     }
+  </script>
 
-    lastX = starX;
-  }
-
-  finishLine.x = lastX + 300;
-}
-
-function attachHook() {
-  let closestStar = null;
-  let minDist = Infinity;
-
-  for (let i = 0; i < stars.length; i++) {
-    const s = stars[i];
-    const dx = s.x - player.x;
-    const dy = s.y - player.y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-
-    if (dist <= s.maxRopeLength && dist < minDist) {
-      minDist = dist;
-      closestStar = s;
-    }
-  }
-
-  if (closestStar) {
-    rope.attached = true;
-    rope.targetStar = closestStar;
-    rope.length = minDist;
-    playHookSound();
-  }
-}
-
-function releaseHook() {
-  rope.attached = false;
-  rope.targetStar = null;
-}
-
-function update() {
-  if (!gameStarted) return;
-
-  updateStopwatch();
-  player.vy += 0.28;
-
-  const now = Date.now();
-
-  for (let i = 0; i < stars.length; i++) {
-    const s = stars[i];
-    if (s.isMoving) {
-      s.y = s.baseY + Math.sin(now * s.moveSpeed + s.offset) * s.moveRange;
-    }
-  }
-
-  for (let pIdx = particles.length - 1; pIdx >= 0; pIdx--) {
-    const p = particles[pIdx];
-    p.x += p.vx;
-    p.y += p.vy;
-    p.life--;
-    if (p.life <= 0) particles.splice(pIdx, 1);
-  }
-
-  // TRAIL UPDATES
-  playerTrail.push({ x: player.x, y: player.y });
-  if (playerTrail.length > 15) playerTrail.shift();
-
-  if (rope.attached && rope.targetStar) {
-    const dx = player.x - rope.targetStar.x;
-    const dy = player.y - rope.targetStar.y;
-    const currentDist = Math.sqrt(dx * dx + dy * dy);
-
-    if (currentDist > rope.length) {
-      const angle = Math.atan2(dy, dx);
-      player.x = rope.targetStar.x + Math.cos(angle) * rope.length;
-      player.y = rope.targetStar.y + Math.sin(angle) * rope.length;
-
-      const nx = dx / currentDist;
-      const ny = dy / currentDist;
-      const dot = player.vx * nx + player.vy * ny;
-
-      player.vx -= dot * nx * 1.03;
-      player.vy -= dot * ny * 1.03;
-    }
-  }
-
-  player.vx *= 0.997;
-  player.vy *= 0.997;
-
-  player.x += player.vx;
-  player.y += player.vy;
-
-  for (let i = 0; i < clouds.length; i++) {
-    const c = clouds[i];
-    if (
-      player.x + player.radius > c.x - c.w / 2 &&
-      player.x - player.radius < c.x + c.w / 2 &&
-      player.y + player.radius >= c.y - c.h / 2 &&
-      player.y - player.radius <= c.y + c.h / 2
-    ) {
-      cloudSpeedBoost += 0.04;
-      bounceCount++;
-      bounceVal.textContent = bounceCount;
-
-      const baseBounceVelocity = 9.5;
-      player.vy = player.y > c.y && player.vy < 0 
-        ? baseBounceVelocity * Math.min(cloudSpeedBoost, 1.3)
-        : -baseBounceVelocity * Math.min(cloudSpeedBoost, 1.3);
-
-      const pushDir = player.vx >= 0 ? 1 : -1;
-      player.vx = (Math.abs(player.vx) + 1.2) * pushDir * Math.min(cloudSpeedBoost, 1.3);
-
-      c.bounceSquish = 10;
-      createBounceParticles(player.x, player.y);
-      playBounceSound();
-    }
-
-    if (c.bounceSquish > 0) c.bounceSquish -= 1;
-  }
-
-  cameraX += (player.x - canvas.width * 0.25 - cameraX) * 0.08;
-
-  if (player.x + player.radius >= finishLine.x) {
-    playWinSound();
-
-    if (currentLevel < 30) {
-      statusVal.textContent = "LEVEL COMPLETE!";
-      gameStarted = false;
-      setTimeout(() => {
-        gameStarted = true;
-        initLevel(currentLevel + 1);
-      }, 900);
-    } else {
-      timerRunning = false;
-      finalTimeFormatted = formatTime(elapsedTime);
-
-      const storedBest = localStorage.getItem('overhook_best_time');
-      let isNewPB = false;
-      if (!storedBest || elapsedTime < parseInt(storedBest)) {
-        localStorage.setItem('overhook_best_time', elapsedTime);
-        isNewPB = true;
-      }
-
-      statusVal.textContent = isNewPB 
-        ? `NEW RECORD! ${finalTimeFormatted}`
-        : `YOU WIN! ${finalTimeFormatted}`;
-
-      gameStarted = false;
-    }
-  }
-
-  if (player.y > canvas.height + 250) {
-    statusVal.textContent = "FELL INTO VOID";
-    gameStarted = false;
-    setTimeout(() => {
-      gameStarted = true;
-      initLevel(currentLevel);
-    }, 800);
-  }
-}
-
-// MODERN NEON RENDERING
-function drawBackground() {
-  const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-  gradient.addColorStop(0, '#0b0f19');
-  gradient.addColorStop(0.6, '#1e1b4b');
-  gradient.addColorStop(1, '#311042');
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-}
-
-function drawStar(s) {
-  const cx = s.x - cameraX;
-  const cy = s.y;
-  s.pulse += 0.05;
-  const pulseRadius = s.size + Math.sin(s.pulse) * 2;
-
-  // Modern Range Ring
-  ctx.beginPath();
-  ctx.arc(cx, cy, s.maxRopeLength, 0, TWO_PI);
-  ctx.strokeStyle = 'rgba(168, 85, 247, 0.12)';
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
-
-  // Outer Neon Glow
-  const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, pulseRadius * 2.5);
-  glow.addColorStop(0, 'rgba(56, 189, 248, 0.4)');
-  glow.addColorStop(1, 'rgba(56, 189, 248, 0)');
-  ctx.fillStyle = glow;
-  ctx.beginPath();
-  ctx.arc(cx, cy, pulseRadius * 2.5, 0, TWO_PI);
-  ctx.fill();
-
-  // Core Diamond/Star Shape
-  ctx.fillStyle = '#38bdf8';
-  ctx.beginPath();
-  ctx.arc(cx, cy, pulseRadius * 0.6, 0, TWO_PI);
-  ctx.fill();
-}
-
-function drawCloud(c) {
-  const x = c.x - cameraX;
-  const y = c.y + c.bounceSquish;
-
-  ctx.save();
-  ctx.shadowColor = 'rgba(56, 189, 248, 0.2)';
-  ctx.shadowBlur = 15;
-
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
-  ctx.beginPath();
-  ctx.roundRect(x - c.w / 2, y - c.h / 2, c.w, c.h, c.h / 2);
-  ctx.fill();
-  ctx.restore();
-}
-
-function drawFinishLine() {
-  const fx = finishLine.x - cameraX;
-  const fw = finishLine.width;
-
-  const gradient = ctx.createLinearGradient(fx, 0, fx + fw, 0);
-  gradient.addColorStop(0, 'rgba(236, 72, 153, 0.3)');
-  gradient.addColorStop(1, 'rgba(236, 72, 153, 0)');
-  ctx.fillStyle = gradient;
-  ctx.fillRect(fx, 0, fw, canvas.height);
-
-  ctx.strokeStyle = '#ec4899';
-  ctx.lineWidth = 4;
-  ctx.beginPath();
-  ctx.moveTo(fx, 0);
-  ctx.lineTo(fx, canvas.height);
-  ctx.stroke();
-}
-
-function render() {
-  drawBackground();
-
-  if (gameStarted || rope.attached) {
-    drawFinishLine();
-    for (let i = 0; i < clouds.length; i++) drawCloud(clouds[i]);
-
-    // PARTICLES
-    for (let i = 0; i < particles.length; i++) {
-      const p = particles[i];
-      ctx.fillStyle = p.color;
-      ctx.globalAlpha = p.life / p.maxLife;
-      ctx.beginPath();
-      ctx.arc(p.x - cameraX, p.y, p.radius, 0, TWO_PI);
-      ctx.fill();
-    }
-    ctx.globalAlpha = 1.0;
-
-    for (let i = 0; i < stars.length; i++) drawStar(stars[i]);
-
-    // ROPE WITH NEON GLOW
-    if (rope.attached && rope.targetStar) {
-      ctx.save();
-      ctx.shadowColor = '#a855f7';
-      ctx.shadowBlur = 12;
-      ctx.beginPath();
-      ctx.moveTo(player.x - cameraX, player.y);
-      ctx.lineTo(rope.targetStar.x - cameraX, rope.targetStar.y);
-      ctx.strokeStyle = '#c084fc';
-      ctx.lineWidth = 4;
-      ctx.lineCap = 'round';
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    // PLAYER MOTION TRAIL
-    ctx.beginPath();
-    for (let i = 0; i < playerTrail.length; i++) {
-      const pt = playerTrail[i];
-      const alpha = (i / playerTrail.length) * 0.3;
-      ctx.fillStyle = `rgba(236, 72, 153, ${alpha})`;
-      ctx.beginPath();
-      ctx.arc(pt.x - cameraX, pt.y, player.radius * (i / playerTrail.length), 0, TWO_PI);
-      ctx.fill();
-    }
-
-    // PLAYER BODY
-    ctx.save();
-    ctx.shadowColor = '#ec4899';
-    ctx.shadowBlur = 15;
-    ctx.beginPath();
-    ctx.arc(player.x - cameraX, player.y, player.radius, 0, TWO_PI);
-    ctx.fillStyle = player.color;
-    ctx.fill();
-    ctx.restore();
-  }
-}
-
-function loop() {
-  update();
-  render();
-  requestAnimationFrame(loop);
-}
-
-loop();
-</script>
 </body>
 </html>
