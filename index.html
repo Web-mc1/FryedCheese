@@ -4,12 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FryedCheese — Creator Studio & Hub</title>
+  
+  <link rel="icon" type="image/png" href="favicon.png">
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
 
     :root {
       --bg-overlay: rgba(0, 0, 0, 0.82);
-      
       --card-bg: rgba(20, 20, 22, 0.65);
       --card-hover: rgba(35, 35, 40, 0.8);
       --card-border: rgba(255, 255, 255, 0.12);
@@ -26,7 +28,6 @@
     
     body {
       background-color: #000;
-      /* BACKGROUND IMAGE SETUP */
       background-image: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('images.jpeg');
       background-size: cover;
       background-position: center;
@@ -66,6 +67,7 @@
       gap: 10px;
       color: var(--text-main);
     }
+
     .brand-dot { 
       width: 10px; 
       height: 10px; 
@@ -87,6 +89,7 @@
       font-weight: 600;
       transition: color 0.2s;
     }
+
     .nav-links a:hover { color: var(--text-main); }
 
     /* LAYOUT CONTAINER */
@@ -117,6 +120,7 @@
       margin-bottom: 20px;
       backdrop-filter: blur(10px);
     }
+
     .pulse-dot { 
       width: 6px; 
       height: 6px; 
@@ -161,6 +165,7 @@
       overflow: hidden;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     }
+
     .bento-card:hover {
       background: var(--card-hover);
       border-color: rgba(255, 255, 255, 0.3);
@@ -168,12 +173,11 @@
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
     }
 
-    .col-8 { grid-column: span 8; }
-    .col-4 { grid-column: span 4; }
+    .col-6 { grid-column: span 6; }
     .col-12 { grid-column: span 12; }
 
     @media (max-width: 768px) {
-      .col-8, .col-4 { grid-column: span 12; }
+      .col-6 { grid-column: span 12; }
     }
 
     .card-label {
@@ -212,11 +216,13 @@
       border: none;
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
     .btn-primary { 
       background: #ffffff; 
       color: #000000; 
       box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
     }
+
     .btn-primary:hover { 
       transform: translateY(-2px) scale(1.02);
       box-shadow: 0 12px 30px rgba(255, 255, 255, 0.35);
@@ -229,6 +235,7 @@
       border: 1px solid var(--card-border); 
       backdrop-filter: blur(10px);
     }
+
     .btn-secondary:hover { 
       background: rgba(255, 255, 255, 0.16); 
       border-color: rgba(255, 255, 255, 0.4);
@@ -245,6 +252,7 @@
       align-items: center;
       margin-top: 16px;
     }
+
     .mc-ip-text { 
       font-family: monospace; 
       color: var(--grey-light); 
@@ -277,11 +285,13 @@
       font-family: inherit;
       font-size: 14px;
     }
+
     .form-input:focus, .form-textarea:focus { 
       outline: none; 
       border-color: #ffffff; 
       box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
     }
+
     .form-textarea { resize: vertical; min-height: 90px; }
 
     .comment-card {
@@ -291,35 +301,11 @@
       padding: 20px;
       margin-bottom: 12px;
     }
+
     .comment-meta { display: flex; justify-content: space-between; margin-bottom: 8px; }
     .comment-user { font-size: 14px; font-weight: 800; color: #ffffff; }
     .comment-date { font-size: 12px; color: var(--text-muted); }
     .comment-text { font-size: 14px; color: var(--grey-mid); }
-
-    /* OVERHOOK GAME MODAL */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.92);
-      backdrop-filter: blur(20px);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-inner {
-      width: 92%; height: 88%; max-width: 1200px;
-      background: #050505; border-radius: 24px; border: 1px solid var(--card-border);
-      position: relative; overflow: hidden;
-      box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
-    }
-    .modal-close {
-      position: absolute; top: 16px; right: 24px; color: #fff;
-      font-size: 28px; cursor: pointer; z-index: 10;
-      transition: transform 0.2s;
-    }
-    .modal-close:hover { transform: scale(1.2); color: var(--grey-mid); }
-    iframe { width: 100%; height: 100%; border: none; }
   </style>
 </head>
 <body>
@@ -329,6 +315,7 @@
     <ul class="nav-links">
       <li><a href="#work">Projects</a></li>
       <li><a href="#yt">YouTube</a></li>
+      <li><a href="#discord">Discord</a></li>
       <li><a href="#mc">Minecraft</a></li>
       <li><a href="#community">Board</a></li>
     </ul>
@@ -342,39 +329,41 @@
       <p>Building arcade web games, running competitive Minecraft events, and sharing devlogs online.</p>
     </section>
 
-    <!-- SUBFRAME BENTO GRID -->
     <div class="bento-grid" id="work">
       
-      <!-- HERO PROJECT (OVERHOOK) -->
-      <div class="bento-card col-8">
+      <div class="bento-card col-12">
         <div class="card-label">Featured Web Game</div>
         <div class="card-title">Overhook Arcade</div>
         <p class="card-desc">A neon grapple physics game. Swing through procedural levels, bounce on clouds, and complete speedruns.</p>
-        <button class="btn btn-primary" onclick="openGame()">Launch Game ↗</button>
+        <a href="https://fryedcheese.itch.io/overhook" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Play on itch.io ↗</a>
       </div>
 
-      <!-- YOUTUBE BENTO -->
-      <div class="bento-card col-4" id="yt">
+      <div class="bento-card col-6" id="yt">
         <div class="card-label">Content</div>
         <div class="card-title">YouTube</div>
         <p class="card-desc">Devlogs, event highlights, and challenge videos.</p>
         <a href="https://youtube.com/@fryed_cheese?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Subscribe ↗</a>
       </div>
 
-      <!-- MINECRAFT SERVER BENTO -->
+      <div class="bento-card col-6" id="discord">
+        <div class="card-label">Community Server</div>
+        <div class="card-title">CrispySprings Discord</div>
+        <p class="card-desc">Join our official community, participate in events, and chat with players.</p>
+        <a href="https://discord.gg/CJGQTdbhyU" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Join Server ↗</a>
+      </div>
+
       <div class="bento-card col-12" id="mc">
         <div class="card-label">Minecraft Community</div>
         <div class="card-title">Minecraft Server CrispySprings</div>
-        <p class="card-desc">custom-coded MCMMO minecraft smp.</p>
+        <p class="card-desc">Custom-coded MCMMO minecraft SMP.</p>
         <div class="mc-ip-box">
           <span class="mc-ip-text" id="serverIp">147.135.6.160:25899</span>
-          <button class="btn btn-secondary" onclick="copyIp()">Copy IP</button>
+          <button class="btn btn-secondary" id="copyBtn" onclick="copyIp()">Copy IP</button>
         </div>
       </div>
 
     </div>
 
-    <!-- COMMUNITY BOARD -->
     <section class="comments-container" id="community">
       <div class="card-label">Community</div>
       <div class="card-title" style="margin-bottom: 20px;">Leave a Message</div>
@@ -398,29 +387,15 @@
 
   </div>
 
-  <!-- OVERHOOK GAME MODAL -->
-  <div class="modal" id="gameModal">
-    <div class="modal-inner">
-      <span class="modal-close" onclick="closeGame()">&times;</span>
-      <iframe src="about:blank" id="gameIframe"></iframe>
-    </div>
-  </div>
-
   <script>
     function copyIp() {
       const ip = document.getElementById('serverIp').textContent;
-      navigator.clipboard.writeText(ip);
-      alert('Copied IP: ' + ip);
-    }
-
-    function openGame() {
-      document.getElementById('gameIframe').src = 'overhook.html';
-      document.getElementById('gameModal').style.display = 'flex';
-    }
-
-    function closeGame() {
-      document.getElementById('gameIframe').src = 'about:blank';
-      document.getElementById('gameModal').style.display = 'none';
+      const copyBtn = document.getElementById('copyBtn');
+      navigator.clipboard.writeText(ip).then(() => {
+        const originalText = copyBtn.textContent;
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => { copyBtn.textContent = originalText; }, 2000);
+      });
     }
 
     document.getElementById('commentForm').addEventListener('submit', (e) => {
