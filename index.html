@@ -32,7 +32,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:co
 nav{display:flex;gap:22px;font-size:14px;font-weight:500}
 nav a{text-decoration:none;color:var(--muted)}
 nav a:hover{color:var(--bone)}
-@media(max-width:560px){nav a:nth-child(n+4){display:none}nav{gap:16px}}
+@media(max-width:680px){nav a:nth-child(n+5){display:none}nav{gap:14px}}
 
 .hero{position:relative;height:min(78vh,680px);min-height:460px;border-bottom:1px solid var(--line);overflow:hidden;touch-action:pan-y}
 #stage{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:crosshair}
@@ -82,7 +82,13 @@ footer{max-width:1100px;margin:0 auto;padding:36px 24px 56px;color:var(--muted);
 <body>
 <header><div class="bar">
   <a class="logo" href="#top"><i></i>FryedCheese</a>
-  <nav aria-label="Main"><a href="#games">Overhook</a><a href="#community">YouTube &amp; Discord</a><a href="#minecraft">Minecraft</a><a href="#board">Contact</a></nav>
+  <nav aria-label="Main">
+    <a href="#games">Overhook</a>
+    <a href="#launcher">Launcher</a>
+    <a href="#minecraft">Minecraft</a>
+    <a href="#community">Community</a>
+    <a href="#board">Contact</a>
+  </nav>
 </div></header>
 
 <div class="hero" id="top">
@@ -117,26 +123,58 @@ footer{max-width:1100px;margin:0 auto;padding:36px 24px 56px;color:var(--muted);
   </div>
 </section>
 
-<section id="community">
-  <h2>Watch and join</h2>
-  <p class="lead" style="margin-bottom:32px">Minecraft videos go on YouTube, with devlogs coming soon. Everything else happens in the Discord.</p>
-  <div class="links">
-    <div><h3>YouTube</h3><p>Minecraft videos and challenge clips. Devlogs are coming soon.</p><a class="btn" href="https://youtube.com/@FryedcheeseYT?sub_confirmation=1" target="_blank" rel="noopener noreferrer">Subscribe</a></div>
-    <div><h3>CrispySprings Discord</h3><p>Chat with players, hear about events first, and share ideas.</p><a class="btn" href="https://discord.gg/CJGQTdbhyU" target="_blank" rel="noopener noreferrer">Join the server</a></div>
+<section id="launcher">
+  <div class="game">
+    <div>
+      <h2>Crispy Launcher</h2>
+      <p class="lead">A custom Minecraft launcher designed for custom modpacks and direct server connectivity. Built for performance and hassle-free setup.</p>
+      <ul class="feat" style="margin-top:16px">
+        <li>Pre-configured for CrispySprings SMP</li>
+        <li>Automatic modpack &amp; asset sync</li>
+        <li>Fast and lightweight desktop interface</li>
+      </ul>
+      <a class="btn main" href="https://sourceforge.net/projects/crispylauncher/files/latest/download" target="_blank" rel="noopener noreferrer">Download Crispy Launcher (.exe)</a>
+    </div>
+    <div class="poster" aria-hidden="true">
+      <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="300" fill="#0a0d12"/>
+        <rect x="40" y="30" width="320" height="240" rx="14" fill="#171b24" stroke="#2a3140" stroke-width="2"/>
+        <rect x="40" y="30" width="320" height="38" rx="14" fill="#1f2430"/>
+        <circle cx="62" cy="49" r="5" fill="#ff5f56"/>
+        <circle cx="78" cy="49" r="5" fill="#ffbd2e"/>
+        <circle cx="94" cy="49" r="5" fill="#27c93f"/>
+        <rect x="70" y="95" width="260" height="36" rx="8" fill="#2a3140"/>
+        <rect x="70" y="145" width="180" height="14" rx="4" fill="#2a3140"/>
+        <rect x="70" y="170" width="220" height="14" rx="4" fill="#2a3140"/>
+        <rect x="120" y="208" width="160" height="42" rx="10" fill="#ffc21a"/>
+      </svg>
+    </div>
   </div>
 </section>
 
 <section id="minecraft">
   <div class="server">
     <div>
-      <h2>CrispySprings</h2>
-      <p class="lead">A custom-coded mcMMO survival multiplayer server. Get the custom launcher or copy the server IP to join.</p>
-      <ul class="feat"><li>mcMMO skills and progression</li><li>Custom-coded features</li><li>Regular community events</li></ul>
-      <a class="btn main" href="https://sourceforge.net/projects/crispylauncher/files/latest/download" target="_blank" rel="noopener noreferrer" style="margin-top:20px">Download Crispy Launcher (.exe)</a>
+      <h2>CrispySprings SMP</h2>
+      <p class="lead">A custom-coded mcMMO survival multiplayer server. Copy the server IP below to hop straight into the game.</p>
+      <ul class="feat">
+        <li>mcMMO skills and progression</li>
+        <li>Custom-coded features</li>
+        <li>Regular community events</li>
+      </ul>
     </div>
     <div>
       <div class="ip"><code id="ipText">147.135.6.160:25899</code><button class="btn main" id="copyBtn" type="button">Copy address</button></div>
     </div>
+  </div>
+</section>
+
+<section id="community">
+  <h2>Watch and join</h2>
+  <p class="lead" style="margin-bottom:32px">Minecraft videos go on YouTube, with devlogs coming soon. Everything else happens in the Discord.</p>
+  <div class="links">
+    <div><h3>YouTube</h3><p>Minecraft videos and challenge clips. Devlogs are coming soon.</p><a class="btn" href="https://youtube.com/@FryedcheeseYT?sub_confirmation=1" target="_blank" rel="noopener noreferrer">Subscribe</a></div>
+    <div><h3>CrispySprings Discord</h3><p>Chat with players, hear about events first, and share ideas.</p><a class="btn" href="https://discord.gg/CJGQTdbhyU" target="_blank" rel="noopener noreferrer">Join the server</a></div>
   </div>
 </section>
 
